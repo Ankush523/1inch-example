@@ -1,0 +1,20 @@
+{
+  "ethereum": {
+    "factoryAddress": "0xfFf1783342bDE5969ffaf7C02E2EED613a208945",
+    "resolverAddress": "0x855045C5077Ab30EDa9A47d58cd67156EDF77643",
+    "deployedAt": "2025-07-29T18:53:16.910Z",
+    "txHashes": {
+      "factory": "0xa21d9cdbcb4eee04fb8444fd16457e37f84af2ff28bea86e8de702772498d938",
+      "resolver": "0x95e731b5fdf61e25e872342dd396173e6565ec4c3d66c9c6e688ff41e16c2de4"
+    }
+  },
+  "aptos": {
+    "address": "0xc8f05319c6a4e4f5ec7ffc080b04ccc08f5f939b30438312dfd6c249016ab4dd",
+    "deployedAt": "2025-07-29T18:53:34.449Z",
+    "txHash": "0x6f697609216803687c7286ebaf7f30d693b28991d96f517e5c81e0c7833c876d",
+    "modules": [
+      "base_escrow",
+      "resolver"
+    ]
+  }
+}

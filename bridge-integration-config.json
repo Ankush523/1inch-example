@@ -1,0 +1,31 @@
+{
+  "ethereum": {
+    "testnet": {
+      "rpc": "https://sepolia.infura.io/v3/your-key",
+      "deployed": false
+    }
+  },
+  "aptos": {
+    "testnet": {
+      "rpc": "https://fullnode.testnet.aptoslabs.com/v1",
+      "deployed": false
+    }
+  },
+  "bridge": {
+    "supportedTokens": [
+      "USDC",
+      "USDT"
+    ],
+    "minimumAmount": "1000000",
+    "maximumAmount": "1000000000000",
+    "timeLocks": {
+      "srcWithdrawal": 600,
+      "srcPublicWithdrawal": 7200,
+      "srcCancellation": 86400,
+      "dstWithdrawal": 600,
+      "dstPublicWithdrawal": 3600,
+      "dstCancellation": 43200
+    }
+  },
+  "createdAt": "2025-07-29T18:05:50.413Z"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ethereum-aptos-bridge-demo",
+  "version": "1.0.0",
+  "description": "Demo for Ethereum-Aptos Cross-chain Bridge",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "demo:eth-to-aptos": "node dist/eth-to-aptos-demo.js",
+    "demo:aptos-to-eth": "node dist/aptos-to-eth-demo.js",
+    "demo:complete-swap": "node dist/complete-swap-demo.js",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "ethers": "^6.13.2",
+    "dotenv": "^16.4.5",
+    "../sdk": "file:../sdk"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.5.2"
+  }
+}
