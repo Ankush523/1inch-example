@@ -1,0 +1,94 @@
+packages:
+  .
+  plutus-apps/hydra-plutus
+  plutus-apps/plutus-extra
+  plutus-apps/plutus-metatheory
+  plutus-apps/plutus-simple-model
+  plutus-apps/quickcheck-dynamic
+  plutus-apps/plutus-staking
+  plutus-apps/plutus-use-cases
+  plutus-apps/marlowe
+  plutus-apps/marlowe-actus
+  plutus-apps/marlowe-cli
+  plutus-apps/marlowe-test
+  plutus-apps/plutus-pab
+  plutus-apps/plutus-contract
+  plutus-apps/plutus-ledger
+  plutus-apps/plutus-ledger-api
+  plutus-apps/plutus-tx
+  plutus-apps/plutus-tx-plugin
+  plutus-apps/plutus-core
+  plutus-apps/plutus-ghc-stub
+  plutus-apps/plutus-ir
+  plutus-apps/plutus-errors
+  plutus-apps/plutus-benchmark
+  plutus-apps/plutus-tutorial
+  plutus-apps/plutus-playground-client
+  plutus-apps/plutus-playground-server
+  plutus-apps/plutus-doc
+  plutus-apps/plutus-metatheory
+  plutus-apps/plutus-simple-model
+  plutus-apps/plutus-staking
+  plutus-apps/plutus-use-cases
+  plutus-apps/marlowe
+  plutus-apps/marlowe-actus
+  plutus-apps/marlowe-cli
+  plutus-apps/marlowe-test
+  plutus-apps/plutus-pab
+  plutus-apps/plutus-contract
+  plutus-apps/plutus-ledger
+  plutus-apps/plutus-ledger-api
+  plutus-apps/plutus-tx
+  plutus-apps/plutus-tx-plugin
+  plutus-apps/plutus-core
+  plutus-apps/plutus-ghc-stub
+  plutus-apps/plutus-ir
+  plutus-apps/plutus-errors
+  plutus-apps/plutus-benchmark
+  plutus-apps/plutus-tutorial
+  plutus-apps/plutus-playground-client
+  plutus-apps/plutus-playground-server
+  plutus-apps/plutus-doc
+
+source-repository-package
+  type: git
+  location: https://github.com/input-output-hk/plutus-apps.git
+  tag: v0.1.0.0
+  subdir:
+    plutus-apps/hydra-plutus
+    plutus-apps/plutus-extra
+    plutus-apps/plutus-metatheory
+    plutus-apps/plutus-simple-model
+    plutus-apps/quickcheck-dynamic
+    plutus-apps/plutus-staking
+    plutus-apps/plutus-use-cases
+    plutus-apps/marlowe
+    plutus-apps/marlowe-actus
+    plutus-apps/marlowe-cli
+    plutus-apps/marlowe-test
+    plutus-apps/plutus-pab
+    plutus-apps/plutus-contract
+    plutus-apps/plutus-ledger
+    plutus-apps/plutus-ledger-api
+    plutus-apps/plutus-tx
+    plutus-apps/plutus-tx-plugin
+    plutus-apps/plutus-core
+    plutus-apps/plutus-ghc-stub
+    plutus-apps/plutus-ir
+    plutus-apps/plutus-errors
+    plutus-apps/plutus-benchmark
+    plutus-apps/plutus-tutorial
+    plutus-apps/plutus-playground-client
+    plutus-apps/plutus-playground-server
+    plutus-apps/plutus-doc
+
+constraints: plutus-core == 1.29.0.0,
+             plutus-ledger == 1.29.0.0,
+             plutus-ledger-api == 1.29.0.0,
+             plutus-tx == 1.29.0.0,
+             plutus-tx-plugin == 1.29.0.0,
+             plutus-ir == 1.29.0.0,
+             plutus-errors == 1.29.0.0,
+             plutus-ghc-stub == 1.29.0.0
+
+allow-newer: plutus-core, plutus-ledger, plutus-ledger-api, plutus-tx, plutus-tx-plugin, plutus-ir, plutus-errors, plutus-ghc-stub

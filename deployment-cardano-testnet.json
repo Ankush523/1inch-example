@@ -1,0 +1,12 @@
+{
+  "network": "cardano-testnet",
+  "nodeUrl": "https://preprod.cardano-testnet.iohk.io",
+  "package": "cardano-cross-chain-swap",
+  "modules": [
+    "CardanoEscrow",
+    "CardanoResolver"
+  ],
+  "deployer": "unknown",
+  "timestamp": "2025-07-31T13:02:38.801Z",
+  "status": "deployed"
+}

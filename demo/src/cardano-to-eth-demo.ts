@@ -8,33 +8,34 @@ interface EthereumConfig {
     chainId: number
 }
 
-interface AptosConfig {
+interface CardanoConfig {
     nodeUrl: string
-    faucetUrl?: string
+    networkId: number // 0 = testnet, 1 = mainnet
     privateKey?: string
     chainId: number
 }
 
-interface SwapParams {
-    direction: 'eth-to-aptos' | 'aptos-to-eth'
+interface CardanoSwapParams {
+    direction: 'eth-to-cardano' | 'cardano-to-eth'
     amountEth: string
-    amountAptos: string
+    amountCardano: string // in Lovelace (1 ADA = 1,000,000 Lovelace)
     makerEthAddress: string
     takerEthAddress: string
-    makerAptosAddress: string
-    takerAptosAddress: string
+    makerCardanoAddress: string
+    takerCardanoAddress: string
     tokenEth: string
-    tokenAptos: string
     secretHash?: string
     secret?: string
 }
 
 // Mock SDK for demo purposes
-class MockEthereumAptosSwapSDK {
-    constructor(ethConfig: EthereumConfig, aptosConfig: AptosConfig) {
+class MockCardanoEthereumSwapSDK {
+    constructor(ethConfig: EthereumConfig, cardanoConfig: CardanoConfig) {
         console.log('📡 SDK initialized with:')
         console.log(`- Ethereum: ${ethConfig.providerUrl}`)
-        console.log(`- Aptos: ${aptosConfig.nodeUrl}`)
+        console.log(
+            `- Cardano: ${cardanoConfig.nodeUrl} (Network: ${cardanoConfig.networkId === 0 ? 'Testnet' : 'Mainnet'})`
+        )
     }
 
     generateSecret() {
@@ -43,11 +44,11 @@ class MockEthereumAptosSwapSDK {
         return {secret: mockSecret, secretHash: mockSecretHash}
     }
 
-    async initiateAptosToEthSwap(params: SwapParams) {
-        console.log('🔄 Creating Aptos source escrow...')
+    async initiateCardanoToEthSwap(params: CardanoSwapParams) {
+        console.log('🔄 Creating Cardano escrow...')
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
-        console.log('🔄 Creating Ethereum destination escrow...')
+        console.log('🔄 Creating Ethereum escrow...')
         await new Promise((resolve) => setTimeout(resolve, 1500))
 
         const swapId = '0x' + Math.random().toString(16).slice(2).padStart(64, '0')
@@ -59,16 +60,16 @@ class MockEthereumAptosSwapSDK {
     async getSwapMetadata(swapId: string) {
         return {
             swapId,
-            direction: 'aptos-to-eth' as const,
+            direction: 'cardano-to-eth' as const,
             ethOrderHash: '0x' + Math.random().toString(16).slice(2).padStart(64, '0'),
             ethEscrowAddress: '0x' + Math.random().toString(16).slice(2).padStart(40, '0'),
-            aptosEscrowId: Math.floor(Math.random() * 1000).toString(),
+            cardanoEscrowId: Math.floor(Math.random() * 1000).toString(),
             makerEthAddress: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
             takerEthAddress: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-            makerAptosAddress: '0x1',
-            takerAptosAddress: '0x2',
-            amountEth: '0.05',
-            amountAptos: '5',
+            makerCardanoAddress: 'addr_test1qpk...',
+            takerCardanoAddress: 'addr_test1qpk...',
+            amountEth: '0.1',
+            amountCardano: '1000000', // 1 ADA in Lovelace
             secretHash: '0x' + Math.random().toString(16).slice(2).padStart(64, '0'),
             createdAt: Math.floor(Date.now() / 1000),
             status: 'active' as const
@@ -77,17 +78,17 @@ class MockEthereumAptosSwapSDK {
 }
 
 /**
- * Demo: Aptos to Ethereum Cross-chain Swap
+ * Demo: Cardano to Ethereum Cross-chain Swap
  *
  * This demo shows how to:
- * 1. Initialize the SDK with Ethereum and Aptos configurations
+ * 1. Initialize the SDK with Ethereum and Cardano configurations
  * 2. Generate a secret for the atomic swap
- * 3. Initiate a swap from Aptos to Ethereum
+ * 3. Initiate a swap from Cardano to Ethereum
  * 4. Monitor the swap status
  */
 
-async function aptosToEthDemo() {
-    console.log('🌉 Starting Aptos to Ethereum Cross-chain Swap Demo\n')
+async function cardanoToEthDemo() {
+    console.log('🌉 Starting Cardano to Ethereum Cross-chain Swap Demo\n')
 
     // Configuration
     const ethConfig: EthereumConfig = {
@@ -97,16 +98,16 @@ async function aptosToEthDemo() {
         chainId: 11155111 // Sepolia
     }
 
-    const aptosConfig: AptosConfig = {
-        nodeUrl: process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com/v1',
-        faucetUrl: process.env.APTOS_FAUCET_URL || 'https://faucet.devnet.aptoslabs.com',
-        privateKey: process.env.APTOS_PRIVATE_KEY,
-        chainId: 2 // Devnet
+    const cardanoConfig: CardanoConfig = {
+        nodeUrl: process.env.CARDANO_NODE_URL || 'https://preprod.cardano-testnet.iohk.io',
+        networkId: 0, // Testnet
+        privateKey: process.env.CARDANO_PRIVATE_KEY,
+        chainId: 3 // Cardano testnet
     }
 
     // Initialize SDK
     console.log('📡 Initializing SDK...')
-    const sdk = new MockEthereumAptosSwapSDK(ethConfig, aptosConfig)
+    const sdk = new MockCardanoEthereumSwapSDK(ethConfig, cardanoConfig)
 
     // Generate secret for atomic swap
     console.log('🔐 Generating secret...')
@@ -115,31 +116,32 @@ async function aptosToEthDemo() {
     console.log(`Secret Hash: ${secretHash}\n`)
 
     // Swap parameters
-    const swapParams: SwapParams = {
-        direction: 'aptos-to-eth',
-        amountEth: '0.05', // 0.05 ETH
-        amountAptos: '5', // 5 APT
+    const swapParams: CardanoSwapParams = {
+        direction: 'cardano-to-eth',
+        amountEth: '0.1', // 0.1 ETH
+        amountCardano: '1000000', // 1 ADA (1,000,000 Lovelace)
         makerEthAddress: process.env.MAKER_ETH_ADDRESS || '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
         takerEthAddress: process.env.TAKER_ETH_ADDRESS || '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-        makerAptosAddress: process.env.MAKER_APTOS_ADDRESS || '0x1',
-        takerAptosAddress: process.env.TAKER_APTOS_ADDRESS || '0x2',
+        makerCardanoAddress: process.env.MAKER_CARDANO_ADDRESS || 'addr_test1qpk...',
+        takerCardanoAddress: process.env.TAKER_CARDANO_ADDRESS || 'addr_test1qpk...',
         tokenEth: process.env.ETH_TOKEN_ADDRESS || '0x0000000000000000000000000000000000000000', // ETH
-        tokenAptos: process.env.APTOS_TOKEN_ADDRESS || '0x1::aptos_coin::AptosCoin',
         secret,
         secretHash
     }
 
     try {
         // Initiate the swap
-        console.log('🚀 Initiating Aptos to ETH swap...')
-        console.log(`Amount Aptos: ${swapParams.amountAptos} APT`)
+        console.log('🚀 Initiating Cardano to ETH swap...')
         console.log(`Amount ETH: ${swapParams.amountEth} ETH`)
-        console.log(`Maker (Aptos): ${swapParams.makerAptosAddress}`)
-        console.log(`Taker (Aptos): ${swapParams.takerAptosAddress}`)
+        console.log(
+            `Amount Cardano: ${swapParams.amountCardano} Lovelace (${Number(swapParams.amountCardano) / 1000000} ADA)`
+        )
         console.log(`Maker (ETH): ${swapParams.makerEthAddress}`)
-        console.log(`Taker (ETH): ${swapParams.takerEthAddress}\n`)
+        console.log(`Taker (ETH): ${swapParams.takerEthAddress}`)
+        console.log(`Maker (Cardano): ${swapParams.makerCardanoAddress}`)
+        console.log(`Taker (Cardano): ${swapParams.takerCardanoAddress}\n`)
 
-        const result = await sdk.initiateAptosToEthSwap(swapParams)
+        const result = await sdk.initiateCardanoToEthSwap(swapParams)
 
         console.log('✅ Swap initiated successfully!')
         console.log(`Swap ID: ${result.swapId}`)
@@ -149,20 +151,24 @@ async function aptosToEthDemo() {
         console.log('⏳ Checking swap status...')
         await new Promise((resolve) => setTimeout(resolve, 2000))
 
-        const swapMetadata = await sdk.getSwapMetadata(result.swapId)
-        console.log('📊 Swap Metadata:')
-        console.log(`- Direction: ${swapMetadata.direction}`)
-        console.log(`- Status: ${swapMetadata.status}`)
-        console.log(`- Aptos Escrow ID: ${swapMetadata.aptosEscrowId}`)
-        console.log(`- ETH Escrow: ${swapMetadata.ethEscrowAddress}`)
-        console.log(`- Created At: ${new Date(swapMetadata.createdAt * 1000).toISOString()}\n`)
+        try {
+            const swapMetadata = await sdk.getSwapMetadata(result.swapId)
+            console.log('📊 Swap Metadata:')
+            console.log(`- Direction: ${swapMetadata.direction}`)
+            console.log(`- Status: ${swapMetadata.status}`)
+            console.log(`- ETH Escrow: ${swapMetadata.ethEscrowAddress}`)
+            console.log(`- Cardano Escrow ID: ${swapMetadata.cardanoEscrowId}`)
+            console.log(`- Created At: ${new Date(swapMetadata.createdAt * 1000).toISOString()}\n`)
+        } catch (error) {
+            console.log('⚠️  Could not fetch swap metadata (contract may not be deployed yet)\n')
+        }
 
         // Instructions for next steps
         console.log('📝 Next Steps:')
         console.log('1. Wait for the withdrawal period to start')
         console.log('2. The taker can complete the swap by revealing the secret:')
         console.log(`   - Secret: ${secret}`)
-        console.log(`   - Use: npm run demo:complete-swap`)
+        console.log(`   - Use: npm run demo:complete-cardano-swap`)
         console.log('3. Or the maker can cancel after the cancellation period\n')
 
         // Save swap info for completion demo
@@ -170,20 +176,12 @@ async function aptosToEthDemo() {
             swapId: result.swapId,
             secret,
             secretHash,
-            direction: 'aptos-to-eth'
+            direction: 'cardano-to-eth'
         }
 
         // In a real application, this would be stored in a database
         console.log('💾 Swap info (save this for completion):')
         console.log(JSON.stringify(swapInfo, null, 2))
-
-        console.log('\n🔄 Swap Flow Summary:')
-        console.log('1. ✅ Aptos escrow created with 5 APT locked')
-        console.log('2. ✅ Ethereum escrow created with 0.05 ETH locked')
-        console.log('3. ⏳ Waiting for taker to reveal secret...')
-        console.log('4. 🎯 Once secret is revealed:')
-        console.log('   - Taker gets 0.05 ETH from Ethereum escrow')
-        console.log('   - Maker gets 5 APT from Aptos escrow')
     } catch (error) {
         console.error('❌ Error initiating swap:', error)
     }
@@ -191,7 +189,7 @@ async function aptosToEthDemo() {
 
 // Run the demo
 if (require.main === module) {
-    aptosToEthDemo()
+    cardanoToEthDemo()
         .then(() => {
             console.log('\n🎉 Demo completed!')
             process.exit(0)
@@ -202,4 +200,4 @@ if (require.main === module) {
         })
 }
 
-export {aptosToEthDemo}
+export {cardanoToEthDemo}

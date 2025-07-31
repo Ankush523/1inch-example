@@ -5,16 +5,17 @@
       "deployed": false
     }
   },
-  "aptos": {
+  "cardano": {
     "testnet": {
-      "rpc": "https://fullnode.testnet.aptoslabs.com/v1",
-      "deployed": false
+      "rpc": "https://preprod.cardano-testnet.iohk.io",
+      "deployed": true
     }
   },
   "bridge": {
     "supportedTokens": [
       "USDC",
-      "USDT"
+      "USDT",
+      "ADA"
     ],
     "minimumAmount": "1000000",
     "maximumAmount": "1000000000000",
@@ -27,5 +28,5 @@
       "dstCancellation": 43200
     }
   },
-  "createdAt": "2025-07-31T13:02:38.891Z"
+  "createdAt": "2025-07-31T13:02:38.802Z"
 }

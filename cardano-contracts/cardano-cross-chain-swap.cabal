@@ -1,0 +1,118 @@
+cabal-version: 3.0
+name: cardano-cross-chain-swap
+version: 0.1.0.0
+license: MIT
+author: 1inch
+maintainer: security@1inch.io
+homepage: https://github.com/1inch/cross-chain-resolver-example
+bug-reports: https://github.com/1inch/cross-chain-resolver-example/issues
+synopsis: Cardano contracts for cross-chain swap with Ethereum
+description: Cardano Plutus contracts for atomic cross-chain swaps between Ethereum and Cardano using 1inch infrastructure.
+category: Blockchain
+build-depends:
+  base ^>=4.16.4.0,
+  plutus-ledger ^>=1.29.0.0,
+  plutus-ledger-api ^>=1.29.0.0,
+  plutus-tx ^>=1.29.0.0,
+  plutus-tx-plugin ^>=1.29.0.0,
+  plutus-core ^>=1.29.0.0,
+  plutus-ir ^>=1.29.0.0,
+  plutus-errors ^>=1.29.0.0,
+  plutus-ghc-stub ^>=1.29.0.0,
+  aeson ^>=2.0,
+  bytestring ^>=0.11,
+  text ^>=2.0,
+  time ^>=1.12,
+  containers ^>=0.6,
+  deepseq ^>=1.4,
+  ghc-prim ^>=0.9,
+  hashable ^>=1.4,
+  mtl ^>=2.3,
+  prettyprinter ^>=1.7,
+  template-haskell ^>=2.18,
+  th-abstraction ^>=0.4,
+  transformers ^>=0.6,
+  unliftio-core ^>=0.2,
+  vector ^>=0.13
+
+default-language: Haskell2010
+default-extensions:
+  DataKinds
+  DeriveGeneric
+  FlexibleContexts
+  FlexibleInstances
+  GeneralizedNewtypeDeriving
+  MultiParamTypeClasses
+  NoImplicitPrelude
+  OverloadedStrings
+  RankNTypes
+  ScopedTypeVariables
+  TypeApplications
+  TypeFamilies
+  TypeOperators
+
+library
+  exposed-modules:
+    CardanoEscrow
+    CardanoResolver
+  hs-source-dirs: src
+  build-depends:
+    base ^>=4.16.4.0,
+    plutus-ledger ^>=1.29.0.0,
+    plutus-ledger-api ^>=1.29.0.0,
+    plutus-tx ^>=1.29.0.0,
+    plutus-tx-plugin ^>=1.29.0.0,
+    plutus-core ^>=1.29.0.0,
+    plutus-ir ^>=1.29.0.0,
+    plutus-errors ^>=1.29.0.0,
+    plutus-ghc-stub ^>=1.29.0.0,
+    aeson ^>=2.0,
+    bytestring ^>=0.11,
+    text ^>=2.0,
+    time ^>=1.12,
+    containers ^>=0.6,
+    deepseq ^>=1.4,
+    ghc-prim ^>=0.9,
+    hashable ^>=1.4,
+    mtl ^>=2.3,
+    prettyprinter ^>=1.7,
+    template-haskell ^>=2.18,
+    th-abstraction ^>=0.4,
+    transformers ^>=0.6,
+    unliftio-core ^>=0.2,
+    vector ^>=0.13
+
+test-suite cardano-cross-chain-swap-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs: test
+  build-depends:
+    base ^>=4.16.4.0,
+    cardano-cross-chain-swap,
+    plutus-ledger ^>=1.29.0.0,
+    plutus-ledger-api ^>=1.29.0.0,
+    plutus-tx ^>=1.29.0.0,
+    plutus-tx-plugin ^>=1.29.0.0,
+    plutus-core ^>=1.29.0.0,
+    plutus-ir ^>=1.29.0.0,
+    plutus-errors ^>=1.29.0.0,
+    plutus-ghc-stub ^>=1.29.0.0,
+    aeson ^>=2.0,
+    bytestring ^>=0.11,
+    text ^>=2.0,
+    time ^>=1.12,
+    containers ^>=0.6,
+    deepseq ^>=1.4,
+    ghc-prim ^>=0.9,
+    hashable ^>=1.4,
+    mtl ^>=2.3,
+    prettyprinter ^>=1.7,
+    template-haskell ^>=2.18,
+    th-abstraction ^>=0.4,
+    transformers ^>=0.6,
+    unliftio-core ^>=0.2,
+    vector ^>=0.13,
+    tasty ^>=1.4,
+    tasty-hunit ^>=0.10,
+    tasty-quickcheck ^>=0.10,
+    QuickCheck ^>=2.14

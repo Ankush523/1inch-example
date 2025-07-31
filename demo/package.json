@@ -8,6 +8,9 @@
     "demo:eth-to-aptos": "node dist/eth-to-aptos-demo.js",
     "demo:aptos-to-eth": "node dist/aptos-to-eth-demo.js",
     "demo:complete-swap": "node dist/complete-swap-demo.js",
+    "demo:eth-to-cardano": "node dist/eth-to-cardano-demo.js",
+    "demo:cardano-to-eth": "node dist/cardano-to-eth-demo.js",
+    "demo:complete-cardano-swap": "node dist/complete-cardano-swap-demo.js",
     "prepare": "npm run build"
   },
   "dependencies": {
