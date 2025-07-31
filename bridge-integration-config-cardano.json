@@ -1,13 +1,13 @@
 {
   "ethereum": {
     "testnet": {
-      "rpc": "https://sepolia.infura.io/v3/your-key",
-      "deployed": false
+      "rpc": "https://eth-sepolia.g.alchemy.com/v2/R989VYWQGCqvtji5NymuKLr_-cJAiP1L",
+      "deployed": true
     }
   },
   "cardano": {
     "testnet": {
-      "rpc": "https://preprod.cardano-testnet.iohk.io",
+      "rpc": "https://rpc.chain49.com/cardano-preprod/",
       "deployed": true
     }
   },
@@ -28,5 +28,5 @@
       "dstCancellation": 43200
     }
   },
-  "createdAt": "2025-07-31T16:05:57.189Z"
+  "createdAt": "2025-07-31T18:39:29.135Z"
 }

@@ -1,34 +1,4 @@
-packages:
-  .
-  plutus-apps/hydra-plutus
-  plutus-apps/plutus-extra
-  plutus-apps/plutus-metatheory
-  plutus-apps/plutus-simple-model
-  plutus-apps/quickcheck-dynamic
-  plutus-apps/plutus-staking
-  plutus-apps/plutus-use-cases
-  plutus-apps/marlowe
-  plutus-apps/marlowe-actus
-  plutus-apps/marlowe-cli
-  plutus-apps/marlowe-test
-  plutus-apps/plutus-pab
-  plutus-apps/plutus-contract
-  plutus-apps/plutus-ledger
-  plutus-apps/plutus-ledger-api
-  plutus-apps/plutus-tx
-  plutus-apps/plutus-tx-plugin
-  plutus-apps/plutus-core
-  plutus-apps/plutus-ghc-stub
-  plutus-apps/plutus-ir
-  plutus-apps/plutus-errors
-  plutus-apps/plutus-benchmark
-  plutus-apps/plutus-tutorial
-  plutus-apps/plutus-playground-client
-  plutus-apps/plutus-playground-server
-  plutus-apps/plutus-doc
-  plutus-apps/plutus-metatheory
-  plutus-apps/plutus-simple-model
-  plutus-apps/plutus-staking
+packages: .
   plutus-apps/plutus-use-cases
   plutus-apps/marlowe
   plutus-apps/marlowe-actus

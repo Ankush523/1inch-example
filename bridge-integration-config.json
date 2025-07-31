@@ -1,8 +1,8 @@
 {
   "ethereum": {
     "testnet": {
-      "rpc": "https://sepolia.infura.io/v3/your-key",
-      "deployed": false
+      "rpc": "https://eth-sepolia.g.alchemy.com/v2/R989VYWQGCqvtji5NymuKLr_-cJAiP1L",
+      "deployed": true
     }
   },
   "aptos": {
@@ -27,5 +27,5 @@
       "dstCancellation": 43200
     }
   },
-  "createdAt": "2025-07-31T16:05:24.992Z"
+  "createdAt": "2025-07-31T18:38:18.403Z"
 }
