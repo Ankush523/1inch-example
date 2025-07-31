@@ -4,6 +4,9 @@
   "description": "Example of 1inch cross chain resolver",
   "scripts": {
     "test": "forge build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:bsc" : "forge build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js tests/main.spec.ts",
+    "test:aptos": "forge build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js tests/ethereum-aptos-bridge.spec.ts",
+    "test:cardano": "forge build && node --experimental-vm-modules ./node_modules/jest/bin/jest.js tests/ethereum-cardano-bridge.spec.ts",
     "lint": "eslint  \"tests/**/*.ts\"",
     "build": "forge build && cd sdk && npm run build && cd ../demo && npm run build",
     "build:contracts": "forge build",
