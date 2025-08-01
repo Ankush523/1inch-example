@@ -1,8 +1,8 @@
 {
   "network": "ethereum-testnet",
-  "factoryAddress": "0x218fbA453A0d51D86a8deA1d359D965CC4873A5c",
-  "deployedAt": "2025-07-31T18:55:52.149Z",
+  "factoryAddress": "0xe5249B252Cf6749A026eE1CC557A7fd6198B85F0",
+  "deployedAt": "2025-08-01T03:31:29.612Z",
   "deployer": "0x74946022285dD6AdC4554aABB13d82da96B8E422",
-  "resolverAddress": "0xE922911704Ad76A2044063620aDDa18571A8F8Ed",
-  "lastUpdated": "2025-07-31T18:56:02.778Z"
+  "resolverAddress": "0x7fE90f82FF986BE11da6150a32802bF17b8585ba",
+  "lastUpdated": "2025-08-01T03:31:41.070Z"
 }
