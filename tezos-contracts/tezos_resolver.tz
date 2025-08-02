@@ -1,0 +1,171 @@
+# Tezos Resolver Contract for Cross-Chain Swaps
+# This contract manages cross-chain swap metadata and coordination
+
+parameter (or
+  (or (pair %register_swap
+        (bytes %swap_id)
+        (pair
+          (string %eth_tx_hash)
+          (pair
+            (address %tezos_escrow)
+            (pair
+              (string %eth_address)
+              (pair
+                (nat %tez_amount)
+                (nat %eth_amount))))))
+      (pair %complete_swap
+        (bytes %swap_id)
+        (bytes %secret)))
+  (pair %cancel_swap
+    (bytes %swap_id)
+    (unit %reason)));
+
+storage (big_map bytes 
+  (pair
+    (string %eth_tx_hash)
+    (pair
+      (address %tezos_escrow)
+      (pair
+        (string %eth_address)
+        (pair
+          (nat %tez_amount)
+          (pair
+            (nat %eth_amount)
+            (pair
+              (timestamp %created_at)
+              (nat %status))))))); # 0=active, 1=completed, 2=cancelled
+
+code {
+  UNPAIR;
+  
+  IF_LEFT {
+    IF_LEFT {
+      # Register new swap
+      UNPAIR;
+      DUP 2;
+      DUP 2;
+      GET;
+      IF_SOME {
+        FAIL; # Swap already exists
+      } {
+        # Create swap record
+        NOW;
+        PUSH nat 0; # Active status
+        PAIR;
+        DUP 3;
+        SWAP;
+        PAIR;
+        SOME;
+        DUP 2;
+        UPDATE;
+        
+        NIL operation;
+        PAIR;
+      };
+    } {
+      # Complete swap
+      UNPAIR;
+      DUP 2;
+      DUP 2;
+      GET;
+      IF_NONE {
+        FAIL; # Swap not found
+      } {
+        # Update status to completed
+        DUP;
+        CDR;
+        CDR;
+        CDR;
+        CDR;
+        CDR;
+        CAR; # created_at
+        PUSH nat 1; # Completed status
+        PAIR;
+        DUP 2;
+        CDR;
+        CDR;
+        CDR;
+        CDR;
+        CAR; # eth_amount
+        PAIR;
+        DUP 3;
+        CDR;
+        CDR;
+        CDR;
+        CAR; # tez_amount
+        PAIR;
+        DUP 4;
+        CDR;
+        CDR;
+        CAR; # eth_address
+        PAIR;
+        DUP 5;
+        CDR;
+        CAR; # tezos_escrow
+        PAIR;
+        DUP 6;
+        CAR; # eth_tx_hash
+        PAIR;
+        
+        SOME;
+        DUP 3;
+        UPDATE;
+        
+        NIL operation;
+        PAIR;
+      };
+    };
+  } {
+    # Cancel swap
+    CAR;
+    DUP 2;
+    DUP 2;
+    GET;
+    IF_NONE {
+      FAIL; # Swap not found
+    } {
+      # Update status to cancelled
+      DUP;
+      CDR;
+      CDR;
+      CDR;
+      CDR;
+      CDR;
+      CAR; # created_at
+      PUSH nat 2; # Cancelled status
+      PAIR;
+      DUP 2;
+      CDR;
+      CDR;
+      CDR;
+      CDR;
+      CAR; # eth_amount
+      PAIR;
+      DUP 3;
+      CDR;
+      CDR;
+      CDR;
+      CAR; # tez_amount
+      PAIR;
+      DUP 4;
+      CDR;
+      CDR;
+      CAR; # eth_address
+      PAIR;
+      DUP 5;
+      CDR;
+      CAR; # tezos_escrow
+      PAIR;
+      DUP 6;
+      CAR; # eth_tx_hash
+      PAIR;
+      
+      SOME;
+      DUP 2;
+      UPDATE;
+      
+      NIL operation;
+      PAIR;
+    };
+  };
+}

@@ -1,0 +1,191 @@
+# Tezos Escrow Contract for Cross-Chain Atomic Swaps
+# This contract implements the Tezos side of ETH<>Tezos atomic swaps
+
+parameter (or
+  (or (pair %initiate 
+        (bytes %secret_hash)
+        (pair 
+          (address %counterparty)
+          (pair 
+            (nat %amount)
+            (timestamp %timelock))))
+      (bytes %redeem))
+  (unit %refund));
+
+storage (pair
+  (option %swap 
+    (pair 
+      (bytes %secret_hash)
+      (pair 
+        (address %initiator)
+        (pair 
+          (address %counterparty)
+          (pair 
+            (nat %amount)
+            (timestamp %timelock))))))
+  (bool %completed));
+
+code {
+  UNPAIR;
+  
+  # Match on parameter
+  IF_LEFT {
+    IF_LEFT {
+      # Initiate swap
+      UNPAIR;
+      DUP 2;
+      CAR;
+      IF_SOME {
+        FAIL; # Swap already exists
+      } {
+        # Create new swap
+        DUP 2;
+        SENDER;
+        PAIR;
+        DUP 3;
+        SWAP;
+        PAIR;
+        AMOUNT;
+        PAIR;
+        DUP 2;
+        SWAP;
+        PAIR;
+        SOME;
+        DUP 2;
+        CDR;
+        PAIR;
+        NIL operation;
+        PAIR;
+      };
+    } {
+      # Redeem with secret
+      DUP 2;
+      CAR;
+      IF_NONE {
+        FAIL; # No swap to redeem
+      } {
+        DUP;
+        CAR; # secret_hash
+        DUP 3;
+        SHA256; # hash the provided secret
+        COMPARE;
+        NEQ;
+        IF {
+          FAIL; # Invalid secret
+        } {
+          # Check if sender is counterparty
+          DUP;
+          CDR;
+          CDR;
+          CAR; # counterparty
+          SENDER;
+          COMPARE;
+          NEQ;
+          IF {
+            FAIL; # Not authorized
+          } {
+            # Check timelock
+            NOW;
+            DUP 2;
+            CDR;
+            CDR;
+            CDR;
+            CDR; # timelock
+            COMPARE;
+            LT;
+            IF {
+              FAIL; # Too early
+            } {
+              # Transfer funds to counterparty
+              DUP;
+              CDR;
+              CDR;
+              CAR; # counterparty
+              CONTRACT unit;
+              IF_NONE {
+                FAIL;
+              } {
+                DUP 2;
+                CDR;
+                CDR;
+                CDR;
+                CAR; # amount
+                UNIT;
+                TRANSFER_TOKENS;
+                
+                # Mark as completed
+                NONE (pair bytes (pair address (pair address (pair nat timestamp))));
+                PUSH bool True;
+                PAIR;
+                
+                NIL operation;
+                DUP 2;
+                CONS;
+                PAIR;
+              };
+            };
+          };
+        };
+      };
+    };
+  } {
+    # Refund
+    DUP 2;
+    CAR;
+    IF_NONE {
+      FAIL; # No swap to refund
+    } {
+      # Check if sender is initiator
+      DUP;
+      CDR;
+      CAR; # initiator
+      SENDER;
+      COMPARE;
+      NEQ;
+      IF {
+        FAIL; # Not authorized
+      } {
+        # Check if timelock has expired
+        NOW;
+        DUP 2;
+        CDR;
+        CDR;
+        CDR;
+        CDR; # timelock
+        COMPARE;
+        GE;
+        IF {
+          # Transfer funds back to initiator
+          DUP;
+          CDR;
+          CAR; # initiator
+          CONTRACT unit;
+          IF_NONE {
+            FAIL;
+          } {
+            DUP 2;
+            CDR;
+            CDR;
+            CDR;
+            CAR; # amount
+            UNIT;
+            TRANSFER_TOKENS;
+            
+            # Clear swap
+            NONE (pair bytes (pair address (pair address (pair nat timestamp))));
+            DUP 3;
+            CDR;
+            PAIR;
+            
+            NIL operation;
+            DUP 2;
+            CONS;
+            PAIR;
+          };
+        } {
+          FAIL; # Timelock not expired
+        };
+      };
+    };
+  };
+}

@@ -89,7 +89,7 @@ async function realEthCardanoSwapTest() {
             console.log(`   - ETH Escrow would be created`)
             console.log(`   - Cardano escrow data: ${swapParams.makerCardanoAddress}`)
         } catch (error) {
-            console.log(`⚠️  Swap creation simulation: ${error.message}`)
+            console.log(`⚠️  Swap creation simulation: ${(error as Error).message}`)
         }
 
         // Test 5: Check swap status
@@ -106,7 +106,7 @@ async function realEthCardanoSwapTest() {
         console.log('✅ Environment setup: WORKING')
         console.log('\n🚀 ETH<>Cardano bridge is ready for cross-chain swaps!')
     } catch (error) {
-        console.error(`❌ Integration test failed: ${error.message}`)
+        console.error(`❌ Integration test failed: ${(error as Error).message}`)
         throw error
     }
 }

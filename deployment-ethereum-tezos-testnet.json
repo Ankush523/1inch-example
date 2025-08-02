@@ -1,0 +1,8 @@
+{
+  "network": "ethereum-testnet",
+  "factoryAddress": "0x83799581925350F72BbaCB7DA34d4eb89F2C3D70",
+  "deployedAt": "2025-08-01T18:42:05.043Z",
+  "deployer": "0x74946022285dD6AdC4554aABB13d82da96B8E422",
+  "tezosResolverAddress": "0x8D631487a8d4c481B3eB03D74BAc248A9Ec1453A",
+  "lastUpdated": "2025-08-01T18:42:19.564Z"
+}

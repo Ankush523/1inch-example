@@ -1,0 +1,13 @@
+{
+  "network": "tezos-testnet",
+  "deployedAt": "2025-08-01T22:43:00.000Z",
+  "contracts": [
+    "tezos_escrow",
+    "tezos_resolver"
+  ],
+  "status": "deployed",
+  "escrowAddress": "KT1MockEscrowContractAddressForTesting123456789",
+  "resolverAddress": "KT1MockResolverContractAddressForTesting123456",
+  "deployer": "tz1MockDeployerAddressForTestingPurposes12345678",
+  "note": "This is a mock deployment file created for testing purposes"
+}
